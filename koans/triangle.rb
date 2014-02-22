@@ -14,6 +14,12 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
+  if [a>0, b>0, c>0].select{|x| x==true}.length != 3
+    raise TriangleError, "All sides have to be greater than 0"  
+  elsif [a+b>c, a+c>b, b+c>a].select{|x| x==true}.length != 3
+    raise TriangleError, "The sum of two sides have to be greater than the third"
+  end
+  
   # WRITE THIS CODE
   relations = [a == b, a == c, b == c]
   relations.select!{ |x| x == true}
