@@ -15,6 +15,15 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
+  relations = [a == b, a == c, b == c]
+  relations.select!{ |x| x == true}
+  if relations.length == 3
+    :equilateral
+  elsif relations.length == 1
+    :isosceles
+  elsif relations.length == 0
+    :scalene
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
