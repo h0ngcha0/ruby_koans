@@ -1,3 +1,4 @@
+# -*- coding: iso-8859-1 -*-
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 # Project: Create a Proxy Class
@@ -13,12 +14,32 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # of the Proxy class is given in the AboutProxyObjectProject koan.
 
 class Proxy
+  attr_reader(:messages)
+  
   def initialize(target_object)
     @object = target_object
     # ADD MORE CODE HERE
+    @available_methods = @object.class.instance_methods(true)
+    @messages = []
   end
 
+  def called?(method)
+    messages.include?(method)
+  end
+
+  def number_of_times_called(method)
+    messages.count(method)
+  end
+  
   # WRITE CODE HERE
+  def method_missing(method_name, *args, &block)
+    if @available_methods.include?(method_name)
+      @messages << method_name
+      @object.__send__(method_name, *args)      
+    else
+      super(method_name, *args, &block)
+    end
+  end
 end
 
 # The proxy object should pass the following Koan:
